@@ -2,9 +2,8 @@
 
 import { useTranslations } from "next-intl";
 import { QrCode, Download, Calendar, Clock, MapPin, Film, User } from "lucide-react";
-import Image from "next/image";
 import { useRef } from "react";
-import html2canvas from "html2canvas";
+import * as htmlToImage from "html-to-image";
 import { toast } from "react-hot-toast";
 import type { Seat } from "./SeatSelector";
 
@@ -32,15 +31,15 @@ export default function Ticket({ userName = "Utilisateur", movieTitle, posterPat
     if (!ticketRef.current) return;
     const toastId = toast.loading("Génération du billet en cours...");
     try {
-      const canvas = await html2canvas(ticketRef.current, { 
-        backgroundColor: "#ffffff", 
-        useCORS: true,
-        allowTaint: true,
-        scale: 2
+      const dataUrl = await htmlToImage.toPng(ticketRef.current, { 
+        quality: 1,
+        pixelRatio: 2,
+        style: {
+          backgroundColor: '#ffffff'
+        }
       });
-      const image = canvas.toDataURL("image/png");
       const link = document.createElement("a");
-      link.href = image;
+      link.href = dataUrl;
       link.download = `CineWorld_Billet_${movieTitle.replace(/\s+/g, '_')}.png`;
       link.click();
       toast.success("Billet téléchargé !", { id: toastId });
