@@ -23,6 +23,8 @@ export default function DashboardClient({ user }: { user: any }) {
   
   // Settings states
   const [soundEnabled, setSoundEnabled] = useState(true);
+  const [fullName, setFullName] = useState(user.user_metadata?.full_name || "");
+  const [isSavingName, setIsSavingName] = useState(false);
   
   const [selectedTicket, setSelectedTicket] = useState<TicketData | null>(null);
 
@@ -107,6 +109,33 @@ export default function DashboardClient({ user }: { user: any }) {
     }
   };
 
+  const handleSaveName = async () => {
+    try {
+      setIsSavingName(true);
+      
+      // Update auth metadata
+      const { error: authError } = await supabase.auth.updateUser({
+        data: { full_name: fullName }
+      });
+      if (authError) throw authError;
+      
+      // Update profile table
+      const { error: profileError } = await supabase.from('profiles').upsert({
+        id: user.id,
+        avatar_url: avatarUrl,
+        full_name: fullName
+      });
+      if (profileError) throw profileError;
+
+      toast.success("Nom d'utilisateur mis à jour avec succès.");
+    } catch (error) {
+      console.error("Erreur mise à jour nom", error);
+      toast.error("Erreur lors de la mise à jour du nom.");
+    } finally {
+      setIsSavingName(false);
+    }
+  };
+
   const handleSavePin = () => {
     if (pinSetup.length < 4) {
       toast.error("Le code PIN doit contenir au moins 4 chiffres.");
@@ -185,19 +214,38 @@ export default function DashboardClient({ user }: { user: any }) {
             </div>
             
             <div className="flex-1 text-center md:text-left">
-              <h3 className="text-lg font-bold text-[#F5F5F5]">Photo de profil</h3>
-              <p className="text-sm text-[#9CA3AF] mb-4">Téléchargez une image pour personnaliser votre espace.</p>
-              <label className="cursor-pointer inline-flex items-center gap-2 bg-[#FF4D4D] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#e04444] transition-colors">
-                <Upload className="w-4 h-4" />
-                {uploading ? "Chargement..." : "Choisir une image"}
+              <h3 className="text-lg font-bold text-[#F5F5F5] mb-2">Informations personnelles</h3>
+              <div className="flex flex-col md:flex-row gap-3 mb-4">
                 <input 
-                  type="file" 
-                  accept="image/*" 
-                  onChange={handleAvatarUpload} 
-                  disabled={uploading}
-                  className="hidden" 
+                  type="text" 
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  placeholder="Votre nom complet"
+                  className="bg-[#0B0F19] border border-[#374151] rounded-lg px-4 py-2 text-white outline-none focus:border-[#FF4D4D] w-full md:max-w-xs"
                 />
-              </label>
+                <button 
+                  onClick={handleSaveName}
+                  disabled={isSavingName || fullName === (user.user_metadata?.full_name || "")}
+                  className="bg-[#374151] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#4B5563] transition-colors disabled:opacity-50"
+                >
+                  {isSavingName ? "Enregistrement..." : "Enregistrer le nom"}
+                </button>
+              </div>
+
+              <div className="mt-4 pt-4 border-t border-[#374151]">
+                <p className="text-sm text-[#9CA3AF] mb-3">Téléchargez une image pour personnaliser votre espace.</p>
+                <label className="cursor-pointer inline-flex items-center gap-2 bg-[#FF4D4D] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#e04444] transition-colors">
+                  <Upload className="w-4 h-4" />
+                  {uploading ? "Chargement..." : "Choisir une image"}
+                  <input 
+                    type="file" 
+                    accept="image/*" 
+                    onChange={handleAvatarUpload} 
+                    disabled={uploading}
+                    className="hidden" 
+                  />
+                </label>
+              </div>
             </div>
           </div>
 

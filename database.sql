@@ -94,3 +94,41 @@ ON public.tickets FOR INSERT WITH CHECK (auth.uid() = user_id);
 -- Index pour accélérer les requêtes
 CREATE INDEX IF NOT EXISTS idx_watchlist_user_id ON public.watchlist(user_id);
 CREATE INDEX IF NOT EXISTS idx_tickets_user_id ON public.tickets(user_id);
+
+-- --------------------------------------------------------
+-- 4. Création du Storage pour les Avatars
+-- --------------------------------------------------------
+-- Créer le bucket s'il n'existe pas
+INSERT INTO storage.buckets (id, name, public) 
+VALUES ('avatars', 'avatars', true)
+ON CONFLICT (id) DO NOTHING;
+
+-- Autoriser tout le monde à voir les avatars
+CREATE POLICY "Avatar images are publicly accessible"
+ON storage.objects FOR SELECT
+USING (bucket_id = 'avatars');
+
+-- Autoriser les utilisateurs connectés à uploader leur propre avatar
+CREATE POLICY "Users can upload avatars"
+ON storage.objects FOR INSERT
+WITH CHECK (
+    bucket_id = 'avatars' 
+    AND auth.uid()::text = (storage.foldername(name))[1]
+);
+
+-- Note : Le chemin du fichier (filePath) côté client doit commencer par `user.id + '/' + ...` pour respecter cette politique.
+-- Si la structure est simplement `user.id-rand.ext`, on peut simplifier la policy :
+DROP POLICY IF EXISTS "Users can upload avatars" ON storage.objects;
+CREATE POLICY "Users can upload avatars"
+ON storage.objects FOR INSERT
+WITH CHECK (
+    bucket_id = 'avatars' 
+    AND auth.role() = 'authenticated'
+);
+
+CREATE POLICY "Users can update their avatars"
+ON storage.objects FOR UPDATE
+USING (
+    bucket_id = 'avatars' 
+    AND auth.role() = 'authenticated'
+);
