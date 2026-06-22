@@ -30,16 +30,23 @@ export default function Ticket({ userName = "Utilisateur", movieTitle, posterPat
 
   const handleDownload = async () => {
     if (!ticketRef.current) return;
+    const toastId = toast.loading("Génération du billet en cours...");
     try {
-      const canvas = await html2canvas(ticketRef.current, { backgroundColor: null, useCORS: true });
+      const canvas = await html2canvas(ticketRef.current, { 
+        backgroundColor: "#ffffff", 
+        useCORS: true,
+        allowTaint: true,
+        scale: 2
+      });
       const image = canvas.toDataURL("image/png");
       const link = document.createElement("a");
       link.href = image;
       link.download = `CineWorld_Billet_${movieTitle.replace(/\s+/g, '_')}.png`;
       link.click();
+      toast.success("Billet téléchargé !", { id: toastId });
     } catch (err) {
       console.error("Erreur téléchargement:", err);
-      toast.error("Impossible de télécharger le billet.");
+      toast.error("Impossible de télécharger le billet.", { id: toastId });
     }
   };
 
@@ -52,11 +59,11 @@ export default function Ticket({ userName = "Utilisateur", movieTitle, posterPat
           {/* Header Image */}
           <div className="relative h-48 w-full bg-black">
             {posterPath ? (
-              <Image 
+              <img 
                 src={`https://image.tmdb.org/t/p/w500${posterPath}`} 
                 alt={movieTitle}
-                fill
-                className="object-cover opacity-80"
+                crossOrigin="anonymous"
+                className="absolute inset-0 w-full h-full object-cover opacity-80"
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center bg-[#151B2B]">
