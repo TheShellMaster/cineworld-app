@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { getImageUrl, Movie } from "@/lib/tmdb";
 import { Clock, Calendar, ChevronRight } from "lucide-react";
@@ -19,6 +19,16 @@ export default function BookingFlow({ cinemaId, cinemaName, movies }: BookingFlo
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [selectedShowtime, setSelectedShowtime] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  
+  const showtimesRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (selectedMovie && showtimesRef.current) {
+      setTimeout(() => {
+        showtimesRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  }, [selectedMovie]);
   
   // States for flow
   const [step, setStep] = useState<1 | 2 | 3>(1); // 1: Movie/Time, 2: Seats, 3: Checkout/Ticket
@@ -145,7 +155,7 @@ export default function BookingFlow({ cinemaId, cinemaName, movies }: BookingFlo
         </div>
 
         {selectedMovie && (
-          <div className="bg-[#151B2B] border border-[#374151] rounded-2xl p-6 mt-8 animate-in slide-in-from-bottom-4">
+          <div ref={showtimesRef} className="bg-[#151B2B] border border-[#374151] rounded-2xl p-6 mt-8 animate-in slide-in-from-bottom-4 scroll-mt-24">
             <h3 className="text-xl font-bold text-[#F5F5F5] mb-4">2. Choisissez votre séance</h3>
             
             <div className="space-y-6">
