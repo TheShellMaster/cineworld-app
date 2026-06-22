@@ -1,0 +1,86 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "films": "Películas",
+    "cinemas": "Cines",
+    "streaming": "Streaming",
+    "profile": "Perfil"
+  },
+  "home": {
+    "trending": "Tendencias de hoy",
+    "nowPlaying": "En cartelera",
+    "popular": "Películas populares",
+    "topRated": "Mejor valoradas",
+    "nearbyCinemas": "Cines cercanos",
+    "streamNow": "Ver en streaming"
+  },
+  "films": {
+    "title": "Catálogo",
+    "search": "Buscar una película...",
+    "filter": "Filtrar por género",
+    "allGenres": "Todos los géneros",
+    "noResults": "No se encontraron películas",
+    "releaseDate": "Estreno",
+    "rating": "Nota"
+  },
+  "cinema": {
+    "nearby": "Cines cercanos",
+    "allowLocation": "Permitir geolocalización",
+    "locationDenied": "Geolocalización denegada",
+    "searchCity": "Buscar una ciudad...",
+    "distance": "a {distance} km",
+    "showtimes": "Sesiones disponibles"
+  },
+  "streaming": {
+    "title": "Streaming",
+    "watchNow": "Ver",
+    "availableOn": "Disponible en",
+    "selectLanguage": "Idioma"
+  },
+  "booking": {
+    "selectSeats": "Elige tus asientos",
+    "seat": "Asiento",
+    "standard": "Estándar",
+    "premium": "Premium",
+    "vip": "VIP",
+    "couple": "Pareja",
+    "booked": "Reservado",
+    "selected": "Seleccionado",
+    "continue": "Continuar",
+    "total": "Total"
+  },
+  "payment": {
+    "title": "Pago",
+    "simulation": "Esto es una simulación, no se realizará ningún pago real",
+    "cardHolder": "Nombre del titular",
+    "cardNumber": "Número de tarjeta",
+    "expiry": "Fecha de vencimiento",
+    "cvv": "CVV",
+    "pay": "Pagar (simulación)"
+  },
+  "ticket": {
+    "title": "Tu entrada",
+    "download": "Descargar entrada",
+    "ticketNumber": "N° de entrada",
+    "seat": "Asiento(s)",
+    "showtime": "Sesión"
+  },
+  "auth": {
+    "login": "Iniciar sesión",
+    "signup": "Registrarse",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "name": "Nombre completo",
+    "google": "Continuar con Google",
+    "forgotPassword": "¿Olvidaste la contraseña?",
+    "noAccount": "¿No tienes cuenta?",
+    "hasAccount": "¿Ya tienes cuenta?"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Algo salió mal",
+    "retry": "Reintentar",
+    "back": "Volver",
+    "seeAll": "Ver todo"
+  }
+}

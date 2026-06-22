@@ -1,0 +1,86 @@
+{
+  "nav": {
+    "home": "Home",
+    "films": "Movies",
+    "cinemas": "Cinemas",
+    "streaming": "Streaming",
+    "profile": "Profile"
+  },
+  "home": {
+    "trending": "Trending Today",
+    "nowPlaying": "Now Playing",
+    "popular": "Popular Movies",
+    "topRated": "Top Rated",
+    "nearbyCinemas": "Cinemas Near You",
+    "streamNow": "Stream Now"
+  },
+  "films": {
+    "title": "Catalog",
+    "search": "Search for a movie...",
+    "filter": "Filter by genre",
+    "allGenres": "All genres",
+    "noResults": "No movies found",
+    "releaseDate": "Release",
+    "rating": "Rating"
+  },
+  "cinema": {
+    "nearby": "Nearby Cinemas",
+    "allowLocation": "Allow location access",
+    "locationDenied": "Location access denied",
+    "searchCity": "Search a city...",
+    "distance": "{distance} km away",
+    "showtimes": "Available showtimes"
+  },
+  "streaming": {
+    "title": "Streaming",
+    "watchNow": "Watch",
+    "availableOn": "Available on",
+    "selectLanguage": "Language"
+  },
+  "booking": {
+    "selectSeats": "Choose your seats",
+    "seat": "Seat",
+    "standard": "Standard",
+    "premium": "Premium",
+    "vip": "VIP",
+    "couple": "Couple",
+    "booked": "Booked",
+    "selected": "Selected",
+    "continue": "Continue",
+    "total": "Total"
+  },
+  "payment": {
+    "title": "Payment",
+    "simulation": "This is a simulation, no real payment will be processed",
+    "cardHolder": "Card holder name",
+    "cardNumber": "Card number",
+    "expiry": "Expiry date",
+    "cvv": "CVV",
+    "pay": "Pay (simulation)"
+  },
+  "ticket": {
+    "title": "Your Ticket",
+    "download": "Download ticket",
+    "ticketNumber": "Ticket #",
+    "seat": "Seat(s)",
+    "showtime": "Showtime"
+  },
+  "auth": {
+    "login": "Login",
+    "signup": "Sign up",
+    "email": "Email",
+    "password": "Password",
+    "name": "Full name",
+    "google": "Continue with Google",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "No account?",
+    "hasAccount": "Already have an account?"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Retry",
+    "back": "Back",
+    "seeAll": "See all"
+  }
+}
