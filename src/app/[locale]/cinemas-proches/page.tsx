@@ -76,15 +76,23 @@ export default function CinemasProchesPage() {
       const query = `
         [out:json][timeout:25];
         (
-          node["amenity"="cinema"](around:15000,${lat},${lon});
-          way["amenity"="cinema"](around:15000,${lat},${lon});
-          relation["amenity"="cinema"](around:15000,${lat},${lon});
+          node["amenity"="cinema"](around:50000,${lat},${lon});
+          way["amenity"="cinema"](around:50000,${lat},${lon});
+          relation["amenity"="cinema"](around:50000,${lat},${lon});
         );
         out center;
       `.trim();
 
       const res = await fetch(
-        `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`
+        `https://overpass-api.de/api/interpreter`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Accept": "application/json"
+          },
+          body: `data=${encodeURIComponent(query)}`
+        }
       );
       if (!res.ok) throw new Error("Overpass error");
       const data = await res.json();
@@ -327,7 +335,7 @@ export default function CinemasProchesPage() {
           {cinemas.length > 0 && (
             <p className="text-sm text-[#9CA3AF]">
               <span className="font-medium text-[#F5F5F5]">{cinemas.length}</span> cinéma
-              {cinemas.length > 1 ? "s" : ""} trouvé{cinemas.length > 1 ? "s" : ""} dans un rayon de 15 km
+              {cinemas.length > 1 ? "s" : ""} trouvé{cinemas.length > 1 ? "s" : ""} dans un rayon de 50 km
             </p>
           )}
 
